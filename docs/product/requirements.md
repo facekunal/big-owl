@@ -15,10 +15,13 @@ A user has exactly one role, chosen at signup: **learner** or **teacher**.
 - Log in, log out.
 - Session refresh without re-entering the password.
 - No email, phone, OAuth, or password reset.
+- Usernames are unique and are the only login identifier.
+- Account deletion and disabling are out of scope for v1 (no service would be notified, which would orphan profiles and courses).
 
 ### Profile / onboarding (users)
 - After first login, a user completes a profile (display name, native language, languages learning or teaching, short bio).
 - Users can view and update their own profile.
+- Profiles use a `display_name`; the login username is not stored in the profile.
 - Profile fields beyond these are open to change while the users service is designed.
 
 ### Courses (catalog)

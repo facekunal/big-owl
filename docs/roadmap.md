@@ -10,6 +10,7 @@ Not forgotten; not needed yet.
 - Payments
 - Password reset (needs a recovery mechanism that fits username-only accounts)
 - Admin tooling
+- Account deletion and disabling (needs events so `users` and `catalog` can clean up)
 
 ## Platform
 - Message broker or event bus (e.g. for account deletion propagating to users and catalog)
