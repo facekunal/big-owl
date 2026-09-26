@@ -19,6 +19,8 @@ Pre-implementation. Only docs and empty `backend/` / `frontend/` exist. Do not i
 - Services own their data. No cross-service database access or joins; only the user ID (UUID) is shared.
 - No synchronous service-to-service calls in core flows (see ADR 0001, 0002). Adding one needs a new ADR.
 - Every course mutation checks role **and** ownership in the service, regardless of the proxy.
+- Auth is independent: it stores only identity (user ID, username, password hash, role) and never calls or depends on `users`/`catalog`. Role lives in auth (ADR 0003). Username is never copied into profiles.
+- Account deletion/disabling is out of scope for v1.
 - Subscriptions live in `catalog`. Profiles live in `users`. Credentials live in `auth`.
 - Out of scope: course content, points, payments, search, notifications. See `docs/roadmap.md`.
 

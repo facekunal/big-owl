@@ -10,6 +10,14 @@ Status: accepted (design section 1). Data model and per-service APIs are not yet
 | **users** | Profiles and onboarding info | Credentials, courses |
 | **catalog** | Courses, subscriptions, teacher ownership | Credentials, profiles |
 
+### Auth independence
+
+Auth knows only about identity: user ID, username, password hash, and **role**. It makes no calls to `users` or `catalog` and runs no logic when profiles or courses change. Dependencies are one-way: other services trust tokens auth issued; auth trusts nothing from them.
+
+- **Role lives in auth.** It is chosen atomically at signup and carried in the token as an authorization claim, so `catalog` can check it without a cross-service call. See [ADR 0003](../adr/0003-identity-ownership.md).
+- **Username lives only in auth.** It is unique and never copied. Profiles in `users` have their own `display_name` and do not store the username, so there is no copy to drift.
+- **Account deletion or disabling is out of scope for v1.** Nothing would notify `users` or `catalog`, leaving orphaned profiles and courses. It returns with the event bus (see [roadmap](../roadmap.md)).
+
 ## Data
 
 Each service has its own database. Locally they share one Postgres instance. There are no cross-service joins. The only shared identifier is the user ID (UUID) issued by auth.
